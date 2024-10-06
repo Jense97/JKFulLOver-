@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
+
+    <title>JKFulLOver</title>
+<style> 
+body {
+  background: linear-gradient(120deg, #7272bc, #000033dc, #001a66); /* Darker blue base colors */
+  background-size: 400% 400%;
+  animation: auroraBody 6s ease infinite;
+  font-family: 'Arial', sans-serif;
+  margin: 0; 
+  overflow-x: hidden; 
+}
+
+@keyframes auroraBody {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    animation: confetti-fall linear infinite;
+    left: calc(100vw * var(--random-x)); /* Set random positions to fit viewport width */
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0.7;
+    }
+}
+
+ 
+  .candle-count-display {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    color: #523700;
+    background-color: #a9ddfe;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid #553C13;
+  }
+  
+  .candle-count-display span {
+    font-weight: bold;
+    color: #AD030F;
+  }
+  
+  .cake {
+    position: absolute;
+    width: 250px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Replace margin negative values with translate to prevent horizontal overflow */
+}
+  
+  .plate {
+    width: 270px;
+    height: 110px;
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    background-color: #ccc;
+    border-radius: 50%;
+    box-shadow: 0 2px 0 #b3b3b3, 0 4px 0 #b3b3b3, 0 5px 40px rgba(0, 0, 0, 0.5);
+  }
+  
+  .cake > * {
+    position: absolute;
+  }
+  
+  .layer {
+    position: absolute;
+    display: block;
+    width: 250px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ffc0cb; /* Pink layer */
+    box-shadow: 0 2px 0px #6a4b18, 0 4px 0px #33240b, 0 6px 0px #fba317, 0 8px 0px #892064, 0 10px 0px #694a1a, 0 12px 0px #2f220b, 0 14px 0px #2f210a, 0 16px 0px #2e200a, 0 18px 0px #2d200a, 0 20px 0px #2c1f0a, 0 22px 0px #2b1f0a, 0 24px 0px #2a1e09, 0 26px 0px #2a1d09, 0 28px 0px #291d09, 0 30px 0px #281c09;
+
+  }
+  
+
+.layer-top {
+    top: 0;
+    background-color: rgb(139, 17, 58);
+}
+
+.layer-middle {
+    top: 33px;
+}
+
+.layer-bottom {
+    top: 66px;
+} 
+  
+  .icing {
+    top: 2px;
+    left: 5px;
+    background-color: #f0e4d0;
+    width: 240px;
+    height: 90px;
+    border-radius: 50%;
+  }
+  .icing:before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    right: 5px;
+    bottom: 6px;
+    left: 5px;
+    background-color: #f4ebdc;
+    box-shadow: 0 0 4px #f6efe3, 0 0 4px #f6efe3, 0 0 4px #f6efe3;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  
+  .drip {
+   display: block;
+    width: 50px;
+    height: 60px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: #f0e4d0; 
+  }
+  
+  .drip1 {
+    top: 53px;
+    left: 5px;
+    transform: skewY(15deg);
+    height: 48px;
+    width: 40px;
+  }
+  
+  .drip2 {
+    top: 69px;
+    left: 181px;
+    transform: skewY(-15deg);
+  }
+  
+  .drip3 {
+    top: 54px;
+    left: 90px;
+    width: 80px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+  }
+  
+  .candle {
+    background-color: #7B020B;
+    width: 12px;
+    height: 35px;
+    border-radius: 6px/3px;
+    top: -20px;
+    left: 50%;
+    margin-left: -8px;
+    z-index: 10;
+  }
+  .candle:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #ad030f;
+  }
+  
+  .candle.out .flame {
+    display: none;
+  }
+  
+  .flame {
+    position: absolute;
+    background-color: orange;
+    width: 10px;
+    height: 25px;
+    border-radius: 8px 8px 8px 8px/20px 20px 8px 8px;
+    top: -34px;
+    left: 50%;
+    margin-left: -7.5px;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.5), 0 0 80px rgba(255, 165, 0, 0.5);
+    transform-origin: 50% 90%;
+    animation: flicker 1s ease-in-out alternate infinite;
+  }
+  
+  @keyframes flicker {
+    0% {
+      transform: skewX(5deg);
+      box-shadow: 0 0 10px rgba(255, 165, 0, 0.2), 0 0 20px rgba(255, 165, 0, 0.2), 0 0 60px rgba(255, 165, 0, 0.2), 0 0 80px rgba(255, 165, 0, 0.2);
+    }
+    25% {
+      transform: skewX(-5deg);
+      box-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.5), 0 0 80px rgba(255, 165, 0, 0.5);
+    }
+    50% {
+      transform: skewX(10deg);
+      box-shadow: 0 0 10px rgba(255, 165, 0, 0.3), 0 0 20px rgba(255, 165, 0, 0.3), 0 0 60px rgba(255, 165, 0, 0.3), 0 0 80px rgba(255, 165, 0, 0.3);
+    }
+    75% {
+      transform: skewX(-10deg);
+      box-shadow: 0 0 10px rgba(255, 165, 0, 0.4), 0 0 20px rgba(255, 165, 0, 0.4), 0 0 60px rgba(255, 165, 0, 0.4), 0 0 80px rgba(255, 165, 0, 0.4);
+    }
+    100% {
+      transform: skewX(5deg);
+      box-shadow: 0 0 10px rgba(255, 165, 0, 0.5), 0 0 20px rgba(255, 165, 0, 0.5), 0 0 60px rgba(255, 165, 0, 0.5), 0 0 80px rgba(255, 165, 0, 0.5);
+    }
+  }
+
+  .bubble-message {
+    position: absolute;
+    bottom: -190px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffccff; /* Light pink background for the bubble */
+    color: #7b020b; /* Darker color for the text */
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    font-family: 'Bubblegum Sans', cursive; /* Bubble font */
+    font-size: 30px;
+    text-align: center;
+    border: 2px solid #ff99cc; /* Optional: border to enhance the bubble effect */
+    letter-spacing: 2px; /* Adds spacing between letters to enhance readability */
+}
+.balloons-container {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    z-index: 5;
+}
+
+.balloon {
+    width: 60px;
+    height: 80px;
+    border-radius: 60% 60% 60% 60% / 90% 90% 100% 100%;
+    background-color: #ff69b4; /* Pink color for the balloons */
+    position: absolute;
+    bottom: -45px;
+    animation: float 6s ease-in-out infinite;
+    box-shadow: inset -3px -3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.balloon1 {
+    background-color: #ff69b4; /* Pink */
+    left: 0;
+    animation-delay: 0 s;
+}
+
+.balloon2 {
+    background-color: #092056; /* Orange */
+    left: 70px;
+    animation-delay: 1s;
+}
+
+.balloon3 {
+    background-color: #dad3ff; /* Green */
+    left: 140px;
+    animation-delay: 2s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-300px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+.window-container {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    left: 900px;
+    top: 400px;
+}
+
+.window {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 5px solid #2d3436;
+    background: #c8d6e5; /* Light blue to represent the window frame */
+}
+
+.window-door {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6); /* Semi-transparent to look like glass */
+    border-right: 2px solid #2d3436;
+    border-left: 2px solid #2d3436;
+    transition: transform 1s ease-in-out;
+    transform-origin: left;
+}
+
+.left-door {
+    left: 0;
+    transform-origin: left;
+}
+
+.right-door {
+    right: 0;
+    transform-origin: right;
+}
+
+.picture {
+    position: absolute;
+    top: 5px; /* Align the top of the picture with the top of the window */
+    left: 5px; /* Align the left of the picture with the left of the window */
+    width: 100%; /* Make the picture fit the entire width of the window */
+    height: 100%; /* Make the picture fit the entire height of the window */
+    object-fit: cover; /* Ensure the picture maintains its aspect ratio while covering the window area */
+    opacity: 0; /* Initially invisible */
+    transition: opacity 2s ease-in-out; /* Smoothly fade in */
+}
+/* Heartbeat styling */
+.heartbeat-heart {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    transform: rotate(-45deg);
+    transform-origin: center;
+    opacity: 0; /* Initially invisible */
+    transition: opacity 1s ease-in-out;
+}
+
+.heartbeat-heart::before,
+.heartbeat-heart::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.heartbeat-heart::before {
+    top: -25px;
+    left: 0;
+}
+
+.heartbeat-heart::after {
+    left: 25px;
+    top: 0;
+}
+
+.left-heartbeat {
+    left: -80px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+}
+
+.right-heartbeat {
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-45deg);
+}
+
+/* Heartbeat animation */
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1) rotate(-45deg);
+    }
+    25% {
+        transform: scale(1.2) rotate(-45deg);
+    }
+    50% {
+        transform: scale(1.5) rotate(-45deg);
+    }
+    75% {
+        transform: scale(1.2) rotate(-45deg);
+    }
+}
+.button {
+    position:absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for the button's dimensions */
+    padding: 10px 20px; /* Button padding */
+    background-color: #2d3436; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Button text size */
+    z-index: 1; /* Ensure it is above other elements */
+}
+
+
+
+
+  .parallax {
+      height: 500px;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .new-section {
+      height: 500px;
+      text-align: center;
+      padding-top: 200px;
+      font-size: 24px;
+    }
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #020738, #000033dc, #001a66, #c090d7fa, #89b4dc);
+    background-size: 400% 400%; 
+    animation: aurora 12s ease infinite;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    right: 1px;
+}
+
+@keyframes aurora {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+/* Cloud Styles */
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    filter: blur(25px);
+    animation: floatClouds 20s ease-in-out infinite;
+    border-radius: 50%;
+}
+
+.cloud-1, .cloud-3, .cloud-5 {
+    width: 350px;
+    height: 180px;
+}
+
+.cloud-2, .cloud-4, .cloud-6 {
+    width: 250px;
+    height: 140px;
+}
+
+.cloud-1 { top: 5%; left: 10%; }
+.cloud-2 { top: 10%; left: 15%; }
+.cloud-3 { top: 15%; left: 45%; }
+.cloud-4 { top: 20%; left: 50%; }
+.cloud-5 { top: 25%; left: 75%; }
+.cloud-6 { top: 30%; left: 80%; }
+
+@keyframes floatClouds {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+/* Animated Blob */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    position: relative; /* Allows positioning of the button relative to the blob */
+}
+
+.box {
+    background: url("c:/Users/user/Downloads/jk.jpg") no-repeat center center; /* Ensure correct path */
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+    height: 550px;
+    width: 550px;
+    box-shadow: 0 20px 5px rgba(0, 0, 0, 0.2);
+    animation: animate 5s ease-in-out infinite;
+    transition: all 1s ease-in-out;
+}
+
+
+@keyframes animate {
+    0% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    50% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+    }
+    100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+}
+
+/* Paper Airplane Button */
+.paper-plane-button {
+    width: 100px;
+    height: 100px;
+    background-color: #8ab7de;
+    clip-path: polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%);
+    position: absolute;
+    animation: flyAround 8s linear infinite;
+    box-shadow: 10px 200px 40px rgba(12, 1, 44, 0.3);
+    cursor: pointer;
+}
+
+/* Estrella Button Style */
+.estrella-button {
+    color: #FFD700; /* Gold color */
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(255, 215, 0, 0.6); /* Brilliant effect */
+}
+
+/* Animation Path */
+@keyframes flyAround {
+    0% {
+        transform: rotate(0deg) translateX(300px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(300px) rotate(-360deg);
+    }
+}
+
+
+/* Star styles */
+#stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: radial-gradient(circle, gold 40%, transparent 50%);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    from {
+        transform: translateY(-100%);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}  
+
+.spotify-container {
+    width: 100%;
+    max-width: 400px; /* Adjust max width as per your design */
+    margin: 20px auto; /* Center the Spotify player and add some space */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for better appearance */
+    border-radius: 10px; /* Optional rounded corners */
+    overflow: hidden; /* Ensure rounded corners are applied properly */
+    position: absolute;
+    top: 800px;
+}
+
+
+    .word-container {
+        font-size: 3rem;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 500px;
+    }
+    .word {
+        position: absolute;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        color: #ffffff;
+        font-size: 3rem;
+        text-shadow: 2px 2px #ff69b4;
+    }
+    .visible {
+        opacity: 1;
+    }
+
+    #jeon {
+            display: inline-block; /* Allows padding and margin */
+            padding: 10px 20px; /* Button padding */
+            background-color: #2d5f6c; /* Background color */
+            color: white; /* Text color */
+            text-decoration: none; /* Remove underline */
+            border-radius: 12px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor */
+            font-size: 17px; /* Text size */
+            transition: background-color 0.3s; /* Smooth transition */
+            top: 1700px;
+        }
+
+        #jeon:hover {
+            background-color: #3d4346; /* Darker background on hover */
+        }
+
+
+  </style>
+
+  </head>
+  <body>
+    <div class="confetti-wrapper">
+    </div>
+  
+  <div class="candle-count-display">
+    𝓙𝓮𝓸𝓷 𝓙𝓾𝓷𝓰𝓴𝓸𝓸𝓴'𝓼 𝓑𝓲𝓻𝓽𝓱𝓭𝓪𝔂:   <span id="candleCount">0Th</span>
+</div>
+<div class="cake">
+  <div class="plate"></div>
+  <div class="layer layer-bottom"></div>
+  <div class="layer layer-middle"></div>
+  <div class="layer layer-top"></div>
+  <div class="icing"></div>
+  <div class="drip drip1"></div>
+  <div class="drip drip2"></div>
+  <div class="drip drip3"></div>
+  <div class="bubble-message">Happy Birthday JK!</div>
+
+</div>
+<div class="balloons-container">
+    <div class="balloon balloon1"></div>
+    <div class="balloon balloon2"></div>
+    <div class="balloon balloon3"></div>
+  </div>
+  
+ 
+  <div class="window-container" id="windowContainer">
+    <div class="window">
+        <div class="window-door left-door" id="leftDoor"></div>
+        <div class="window-door right-door" id="rightDoor"></div>
+        <button class="button" onclick="openWindow()">Open</button> <!-- Button to open the window -->
+    </div>
+    <img src="c:\Users\user\Downloads\563be3eb28b64858c74a5c5ffffc4d15.png" alt="Falling Picture" class="picture" id="picture">
+    <div class="heartbeat-heart left-heartbeat" id="leftHeartbeat"></div>
+    <div class="heartbeat-heart right-heartbeat" id="rightHeartbeat"></div>
+    <audio id="audioPlayer" src="c:\Users\user\Downloads\정국 (Jung Kook) Too Sad To Dance.mp3" preload="auto"></audio>
+</div>
+<!-- Spotify Integration -->
+<div class="spotify-container">
+    <iframe 
+        src="https://open.spotify.com/embed/track/2nRMW95dnOILirpjbksLTs" 
+        width="100%" 
+        height="80" 
+        frameborder="0" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        allowtransparency="true">
+    </iframe>
+</div>
+
+<div class="word-container">
+    <div class="word" id="shot">I am so proud of everything you've accomplished</div>
+    <div class="word" id="glass">I can't wait to be there to witness</div>
+    <div class="word" id="ofTears">the next chapter of your incredible journey</div>
+    <div class="word" id="Yes">Here's to even more success,</div>
+    <div class="word" id="or">and to celebrating each milestone together.</div>
+    <div class="word" id="No">Your next era will be even greater, and</div>
+    <div class="word" id="Seven">I'll be cheering you on every step of the way!</div>
+    <div class="word" id="soso">💓🎉🎂🤟 I MISS YOU JEON!</div>
+</div>
+  
+
+
+
+
+
+  <!-- Parallax Section -->
+  <div class="parallax"></div>
+  <!-- New Empty Section -->
+  <div class="new-section">
+     <div class="background">
+        <!-- Clouds -->
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="cloud cloud-6"></div>
+     </div>
+    
+
+    
+    <div class="wrapper">
+        <button class="paper-plane-button estrella-button"> ⭐ </button>
+        <div class="box"></div>    
+    </div>
+
+  </div>
+
+  <a href="MSG.html" class="button" id="jeon">Click Here</a>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () { 
+  const cake = document.querySelector(".cake");
+  const candleCountDisplay = document.getElementById("candleCount");
+  let candles = [];
+  let audioContext;
+  let analyser;
+  let microphone;
+
+  function updateCandleCount() {
+    const activeCandles = candles.filter(
+      (candle) => !candle.classList.contains("out")
+    ).length;
+    candleCountDisplay.textContent = activeCandles;
+  }
+
+  function addCandle(left, top) {
+    const candle = document.createElement("div");
+    candle.className = "candle";
+    candle.style.left = left + "px";
+    candle.style.top = top + "px";
+
+    const flame = document.createElement("div");
+    flame.className = "flame";
+    candle.appendChild(flame);
+
+    cake.appendChild(candle);
+    candles.push(candle);
+    updateCandleCount();
+  }
+
+  cake.addEventListener("click", function (event) {
+    const rect = cake.getBoundingClientRect();
+    const left = event.clientX - rect.left;
+    const top = event.clientY - rect.top;
+    addCandle(left, top);
+  });
+
+  function isBlowing() {
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    analyser.getByteFrequencyData(dataArray);
+
+    let sum = 0;
+    for (let i = 0; i < bufferLength; i++) {
+      sum += dataArray[i];
+    }
+    let average = sum / bufferLength;
+
+    return average > 40;
+  } // Added missing closing brace for isBlowing()
+
+  function blowOutCandles() {
+    let blownOut = 0;
+
+    if (isBlowing()) {
+      candles.forEach((candle) => {
+        if (!candle.classList.contains("out") && Math.random() > 0.5) {
+          candle.classList.add("out");
+          blownOut++;
+        }
+      });
+    }
+
+    if (blownOut > 0) {
+      updateCandleCount();
+    }
+  }
+
+  if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(function (stream) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        microphone = audioContext.createMediaStreamSource(stream);
+        microphone.connect(analyser);
+        analyser.fftSize = 256;
+        setInterval(blowOutCandles, 200);
+      })
+      .catch(function (err) {
+        console.log("Unable to access microphone: " + err);
+      });
+  } else {
+    console.log("getUserMedia not supported on your browser!");
+  }
+});
+
+
+// Function to create a star
+function createStar() {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.left = `${Math.random() * 100}vw`;
+    star.style.animationDuration = `${Math.random() * 2 + 3}s`; // Fall speed between 3s and 5s
+    star.style.opacity = Math.random(); // Randomize opacity for a twinkling effect
+    document.getElementById('stars-container').appendChild(star);
+
+    setTimeout(() => {
+        star.remove();
+    }, 5000); // Remove star after animation completes
+}
+
+// Create stars at intervals
+setInterval(createStar, 100);
+
+function openWindow() {
+    // Open the window doors
+    const leftDoor = document.getElementById("leftDoor");
+    const rightDoor = document.getElementById("rightDoor");
+    
+    // Left door slides to the left, right door slides to the right
+    leftDoor.style.transform = "translateX(-100%)";
+    rightDoor.style.transform = "translateX(100%)";
+    
+    // Display the picture slowly by changing the opacity
+    const picture = document.getElementById("picture");
+    setTimeout(() => {
+        picture.style.opacity = "1"; // Fade in the picture
+    }, 500); // Delay a bit to sync with the door opening
+
+     // Hide the button
+     const button = document.querySelector(".button");
+    button.style.display = "none"; // Hide the button when doors open
+
+     // Play the audio
+     const audioPlayer = document.getElementById("audioPlayer");
+    audioPlayer.play(); // Start playing the audio
+
+    // Show and animate the heartbeats
+    const leftHeartbeat = document.getElementById("leftHeartbeat");
+    const rightHeartbeat = document.getElementById("rightHeartbeat");
+
+    // Set opacity to 1 to make them visible
+    leftHeartbeat.style.opacity = "1";
+    rightHeartbeat.style.opacity = "1";
+
+    // Add heartbeat animation
+    leftHeartbeat.style.animation = "heartbeat 1s ease-in-out infinite";
+    rightHeartbeat.style.animation = "heartbeat 1s ease-in-out infinite";
+}
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const confettiWrapper = document.querySelector(".confetti-wrapper");
+
+    // Generate 100 confetti pieces
+    for (let i = 0; i < 100; i++) {
+        let confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        // Add a CSS variable to each confetti to set its horizontal position without exceeding bounds
+        confetti.style.setProperty('--random-x', Math.random());
+
+        confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
+        confetti.style.backgroundColor = getRandomColor();
+        confettiWrapper.appendChild(confetti);
+    }
+
+    function getRandomColor() {
+        const colors = ["#ff0000", "#00ff00", "#0000ff", "#ffff00", "#ff00ff", "#00ffff"];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+});
+
+
+const words = ['shot', 'glass', 'ofTears', 'Yes', 'or', 'No', 'Seven', 'soso'];
+    let currentIndex = 0;
+
+    function showWord(index) {
+        words.forEach((word, i) => {
+            const wordElement = document.getElementById(word);
+            if (i === index) {
+                wordElement.classList.add('visible');
+            } else {
+                wordElement.classList.remove('visible');
+            }
+        });
+    }
+
+    function cycleWords() {
+        showWord(currentIndex);
+        currentIndex = (currentIndex + 1) % words.length;
+    }
+
+    setInterval(cycleWords, 4000); // Change every 4 seconds
+    cycleWords(); // Show the first word immediately
+
+   
+    
+   
+
+</script>
+      
+</body>
+</html>
